@@ -28,7 +28,7 @@ snakeyaml = "2.4"
 testcontainers = "1.20.6"
 
 [plugins]
-elhub-gradle-plugin = { id = "no.elhub.devxp.kotlin-service", version.ref = "elhub-gradle" }
+elhub-gradle-plugin = { id = "no.elhub.ediel.kotlin-service", version.ref = "elhub-gradle" }
 google-cloud-tools-jib = { id = "com.google.cloud.tools.jib", version.ref = "google-jib" }
 gradle-docker = { id = "com.avast.gradle.docker-compose", version.ref = "gradle-docker" }
 ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
