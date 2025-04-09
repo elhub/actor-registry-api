@@ -1,4 +1,4 @@
-# devxp-ktor-service-template
+# actor-registry-api
 
 ## About
 
@@ -59,12 +59,12 @@ The following endpoints are available:
 ## Contributing
 
 Contributing, issues and feature requests are welcome. See the
-[Contributing](https://github.com/elhub/devxp-ktor-service-template/blob/main/.github/CONTRIBUTING.md) file.
+[Contributing](https://github.com/elhub/actor-registry-api/blob/main/.github/CONTRIBUTING.md) file.
 
 ## Owners
 
 This project is developed by [Elhub](https://www.elhub.no). For the specific development group responsible for this
-code, see the [Codeowners](https://github.com/elhub/devxp-ktor-service-template/blob/main/.github/CODEOWNERS) file.
+code, see the [Codeowners](https://github.com/elhub/actor-registry-api/blob/main/.github/CODEOWNERS) file.
 
 ## License
 

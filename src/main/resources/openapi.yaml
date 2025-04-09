@@ -5,7 +5,7 @@ info:
   title: Example API
   license:
     name: MIT
-    url: https://github.com/elhub/devxp-ktor-service-template/LICENSE
+    url: https://github.com/elhub/actor-registry-api/LICENSE
 servers:
   - url: https://api-mt1.elhub.no/example-api/v0
 paths:

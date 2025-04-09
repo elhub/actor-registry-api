@@ -1,4 +1,4 @@
-rootProject.name = "devxp-ktor-service-template"
+rootProject.name = "actor-registry-api"
 
 pluginManagement {
     repositories {

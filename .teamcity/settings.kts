@@ -10,7 +10,7 @@ import no.elhub.devxp.build.configuration.pipeline.jobs.gradleVerify
 val imageRepo = "GROUP/REPONAME"
 val gitOpsRepo = "https://github.com/elhub/GROUP"
 
-elhubProject(group = Group.DEVXP, name = "devxp-ktor-service-template") {
+elhubProject(group = Group.DEVXP, name = "actor-registry-api") {
     pipeline {
         sequential {
             gradleVerify()
