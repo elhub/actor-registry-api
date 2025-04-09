@@ -1,7 +1,6 @@
 package no.elhub.devxp.model
 
 import kotlinx.serialization.Serializable
-import no.elhub.devxp.model.Comment.Json.CommentRelationships
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.Table
 import kotlin.String
@@ -11,8 +10,13 @@ data class Company(
     val name: String,
     val gln: String,
     val organizationId: String,
-
+    var companyRoles: List<Role> = emptyList()
 ) {
+    fun setRoles(newRoles: List<Role>): Company {
+        companyRoles = newRoles
+        return this
+    }
+
     // Database Entity
     object Entity : Table("company") {
         val id = integer("id").autoIncrement()
@@ -48,8 +52,8 @@ data class Company(
         data class CompanyData(
             val id: Int? = null,
             val type: String,
-            val attributes: CompanyAttributes//,
-//            val relationships: CompanyRelationships? = null
+            val attributes: CompanyAttributes,
+            val roles: List<Role.Json.RoleData>? = null
         ) {
             constructor(company: Company) : this(
                 id = company.id,
@@ -58,15 +62,8 @@ data class Company(
                     name = company.name,
                     gln = company.gln,
                     organizationId = company.organizationId
-                )//,
-//                relationships = CompanyRelationships(
-//                    user = CommentUser(
-//                        data = CommentUserData(
-//                            id = comment.userId,
-//                            type = "User"
-//                        )
-//                    )
-//                )
+                ),
+                roles = company.companyRoles.map { Role.Json.RoleData(it) }
             )
         }
 

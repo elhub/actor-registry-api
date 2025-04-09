@@ -5,8 +5,11 @@ import io.ktor.server.application.ApplicationCall
 import io.ktor.server.plugins.NotFoundException
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
+import io.ktor.server.routing.RoutingCall
 import kotlinx.serialization.json.Json
 import no.elhub.devxp.model.Company
+import no.elhub.devxp.model.CompanyRole
+import no.elhub.devxp.model.Role
 import no.elhub.devxp.utils.ApiError
 import no.elhub.devxp.utils.MissingFieldException
 import no.elhub.devxp.utils.callUri
@@ -44,6 +47,29 @@ class CompanyService {
     suspend fun getCompanies(call: ApplicationCall) {
         val companies = retrieveCompanies()
         call.respond(status = HttpStatusCode.OK, message = Company.Json(companies, call.callUri()))
+    }
+
+    suspend fun getFullCompanies(call: ApplicationCall) {
+        val companies = retrieveFullCompanies()
+        call.respond(status = HttpStatusCode.OK, message = Company.Json(companies, call.callUri()))
+    }
+
+    suspend fun getCompanyRoles(call: ApplicationCall) {
+        try {
+            val id = call.parameters["id"]?.toIntOrNull()
+            if (id == null) {
+                throw IllegalArgumentException("Invalid id in the request.")
+            }
+            val roles = retrieveCompanyRoles(id)
+            if (roles.isEmpty()) {
+                ApiError.return404NotFound(call, NotFoundException("Company with id $id not found"))
+                return
+            }
+            call.respond(status = HttpStatusCode.OK, message = Role.Json(roles, call.callUri()))
+        } catch (e: IllegalArgumentException) {
+            ApiError.return400BadRequest(call, e)
+            return
+        }
     }
 
     suspend fun getCompany(call: ApplicationCall) {
@@ -121,6 +147,35 @@ class CompanyService {
         return companies
     }
 
+    private fun retrieveCompanyRoles(companyId: Int): List<Role> {
+        var companies: List<Role> = emptyList()
+        val result = transaction {
+            (CompanyRole innerJoin Company.Entity innerJoin Role.Entity)
+                .selectAll()
+                .where{
+                    CompanyRole.companyId eq companyId
+                }
+                .toList()
+        }
+        companies = result.map { Role(it) }
+        return companies
+    }
+
+    private fun retrieveFullCompanies(): List<Company> {
+        var companies: List<Company> = emptyList()
+        val result = transaction {
+            (Company.Entity innerJoin CompanyRole innerJoin Role.Entity)
+            .selectAll()
+            .groupBy(
+                { Company(it) }, // Map each row to a Company object
+                { Role(it) }     // Map each row to a Role object
+            )
+            .toList()
+        }
+        companies = result.map { it.first.setRoles(it.second) }
+        return companies
+    }
+
     private fun addCompanies(company: CompanyJson) {
         transaction {
             Company.Entity.insert {
@@ -150,5 +205,4 @@ class CompanyService {
         }
         return deletedItems
     }
-
 }

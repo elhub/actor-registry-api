@@ -25,4 +25,16 @@ fun Route.companyRoutes(companyService: CompanyService) {
             companyService.getCompany(call)
         }
     }
+
+    route("/full"){
+        get {
+            companyService.getFullCompanies(call)
+        }
+    }
+
+    route("/roles/{id}") {
+        get {
+            companyService.getCompanyRoles(call)
+        }
+    }
 }
