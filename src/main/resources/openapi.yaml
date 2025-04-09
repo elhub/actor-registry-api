@@ -1,0 +1,182 @@
+---
+openapi: 3.1.1
+info:
+  version: 0.1.0
+  title: Example API
+  license:
+    name: MIT
+    url: https://github.com/elhub/devxp-ktor-service-template/LICENSE
+servers:
+  - url: https://api-mt1.elhub.no/example-api/v0
+paths:
+  "/ping":
+    get:
+      summary: Pong.
+      responses:
+        "200":
+          description: Returns pong.
+          content:
+            application/txt:
+              type: string
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+  "/users":
+    get:
+      summary: Retrieve a list of users.
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/user.json"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+  "/comments":
+    get:
+      summary: Retrieve a list of comments.
+      responses:
+        "200":
+          description: A list of comments.
+          content:
+            application/json:
+              schema:
+                $ref: "schemas/comment.json"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+    post:
+      summary: Create a new comments.
+      description: Add a new comment to the database.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "/schemas/comment.json"
+      responses:
+        "200":
+          description: |
+            This creates a new authorization request and returns the details of the request initiated (including the link to the request flow on MinSide).
+          content:
+            application/json:
+              schema:
+                $ref: "/schemas/comment.json"
+        "400":
+          $ref: "#/components/responses/400BadRequestError"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+    patch:
+      summary: Update a comment.
+      description: Update a comment.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the authorization request to change.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The authorization request was updated.
+          content:
+            application/json:
+              schema:
+                $ref: "/schemas/comment.json"
+        "400":
+          $ref: "#/components/responses/400BadRequestError"
+        "404":
+          $ref: "#/components/responses/404NotFoundError"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+  "/comments/{id}":
+    get:
+      summary: Retrieve a specific comment.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the authorization request to retrieve.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: This returns information about the authorization request.
+          content:
+            application/json:
+              schema:
+                $ref: "/schemas/comment.json"
+        "400":
+          $ref: "#/components/responses/400BadRequestError"
+        "404":
+          $ref: "#/components/responses/404NotFoundError"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+    delete:
+      summary: Delete/cancel a comment.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the authorization request to delete.
+          schema:
+            type: string
+      responses:
+        "200":
+          $ref: "#/components/responses/MetaResponse"
+        "400":
+          $ref: "#/components/responses/400BadRequestError"
+        "403":
+          $ref: "#/components/responses/403ForbiddenError"
+        "404":
+          $ref: "#/components/responses/404NotFoundError"
+        "500":
+          $ref: "#/components/responses/500InternalServerError"
+components:
+  responses:
+    400BadRequestError:
+      description: Bad request. Invalid request body.
+      content:
+        application/json:
+          schema:
+            $ref: "/schemas/error-response.json"
+    401UnauthorizedError:
+      description: Unauthorized.
+      content:
+        application/json:
+          schema:
+            $ref: "/schemas/error-response.json"
+    403ForbiddenError:
+      description: Forbidden.
+      content:
+        application/json:
+          schema:
+            $ref: "/schemas/error-response.json"
+    404NotFoundError:
+      description: Not found.
+      content:
+        application/json:
+          schema:
+            $ref: "/schemas/error-response.json"
+    500InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: "/schemas/error-response.json"
+    MetaResponse:
+      description: Metadata response for informational purposes.
+      content:
+        application/json:
+          schema:
+            $ref: "/schemas/meta-response.json"
+  securitySchemes:
+    idPorten:
+      type: openIdConnect
+      openIdConnectUrl: https://example.com/.well-known/openid-configuration
+    maskinPorten:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://maskinporten.no/token
+          scopes:
+            read: Read access
+            write: Write access

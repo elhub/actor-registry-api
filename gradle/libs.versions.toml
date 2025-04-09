@@ -1,0 +1,86 @@
+[metadata]
+format.version = "1.1"
+
+[versions]
+cohort = "2.6.1"
+elhub-gradle = "0.3.1"
+exposed = "0.60.0"
+google-jib = "3.4.5"
+gradle-docker = "0.17.12"
+hikari = "6.2.1"
+kotlinx-datetime = "0.6.2"
+kotlinx-serialization = "1.8.0"
+kotlinx-serialization-plugin = "2.1.10"
+koin = "4.0.2"
+koin-annotations = "2.0.0"
+kotest = "5.9.1"
+kotlin-logging = "7.0.5"
+ksp = "2.1.10-1.0.31"
+ktor = "3.1.1"
+liquibase = "4.31.1"
+liquibase-plugin = "3.0.2"
+micrometer = "1.14.5"
+mockk = "1.13.17"
+picocli = "4.7.6"
+postgresql = "42.7.5"
+slf4j = "2.0.17"
+snakeyaml = "2.4"
+testcontainers = "1.20.6"
+
+[plugins]
+elhub-gradle-plugin = { id = "no.elhub.devxp.kotlin-service", version.ref = "elhub-gradle" }
+google-cloud-tools-jib = { id = "com.google.cloud.tools.jib", version.ref = "google-jib" }
+gradle-docker = { id = "com.avast.gradle.docker-compose", version.ref = "gradle-docker" }
+ksp-plugin = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+ktor-plugin = { id = "io.ktor.plugin", version.ref = "ktor" }
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinx-serialization-plugin" }
+liquibase-plugin = { id = "org.liquibase.gradle", version.ref = "liquibase-plugin" }
+
+[libraries]
+cli-picocli = { group = "info.picocli", name = "picocli", version.ref = "picocli" }
+database-exposed-core = { module = "org.jetbrains.exposed:exposed-core", version.ref = "exposed" }
+database-exposed-dao = { module = "org.jetbrains.exposed:exposed-dao", version.ref = "exposed" }
+database-exposed-java-time = { module = "org.jetbrains.exposed:exposed-java-time", version.ref = "exposed" }
+database-exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "exposed" }
+database-hikari = { group = "com.zaxxer", name = "HikariCP", version.ref = "hikari" }
+database-liquibase-core = { group = "org.liquibase", name = "liquibase-core", version.ref = "liquibase" }
+database-postgresql = { group = "org.postgresql", name = "postgresql", version.ref = "postgresql" }
+di-koin-annotations = { group = "io.insert-koin", name = "koin-annotations", version.ref = "koin-annotations" }
+di-koin-ksp-compiler = { group = "io.insert-koin", name = "koin-ksp-compiler", version.ref = "koin-annotations" }
+di-koin-ktor = { group = "io.insert-koin", name = "koin-ktor", version.ref = "koin" }
+di-koin-logger-slf4j = { group = "io.insert-koin", name = "koin-logger-slf4j", version.ref = "koin" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinx-datetime" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+ktor-serialization-kotlinx-json = { group = "io.ktor", name = "ktor-serialization-kotlinx-json", version.ref = "ktor" }
+ktor-server-call-logging = { group = "io.ktor", name = "ktor-server-call-logging", version.ref = "ktor" }
+ktor-server-config-yaml = { group="io.ktor", name="ktor-server-config-yaml", version.ref="ktor"}
+ktor-server-content-negotiation = { group = "io.ktor", name = "ktor-server-content-negotiation", version.ref = "ktor" }
+ktor-server-core = { group = "io.ktor", name = "ktor-server-core", version.ref = "ktor" }
+ktor-server-metrics-micrometer = { group = "io.ktor", name = "ktor-server-metrics-micrometer", version.ref = "ktor" }
+ktor-server-netty = { group = "io.ktor", name = "ktor-server-netty", version.ref = "ktor" }
+ktor-server-swagger = { group = "io.ktor", name = "ktor-server-swagger", version.ref = "ktor" }
+logging-oshai-kotlin-logging = { group = "io.github.oshai", name = "kotlin-logging-jvm", version.ref = "kotlin-logging" }
+logging-slf4j-simple = { group = "org.slf4j", name = "slf4j-simple", version.ref = "slf4j" }
+monitoring-cohort-hikari = { group = "com.sksamuel.cohort", name = "cohort-hikari", version.ref = "cohort" }
+monitoring-cohort-ktor = { group = "com.sksamuel.cohort", name = "cohort-ktor", version.ref = "cohort" }
+monitoring-cohort-micrometer = { group = "com.sksamuel.cohort", name = "cohort-micrometer", version.ref = "cohort" }
+monitoring-micrometer-registry-prometheus = { group = "io.micrometer", name = "micrometer-registry-prometheus", version.ref = "micrometer" }
+serialization-yaml-snakeyaml = { group = "org.yaml", name = "snakeyaml", version.ref = "snakeyaml" }
+test-kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+test-kotest-runner-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+test-ktor-server-test-host = { group = "io.ktor", name = "ktor-server-test-host", version.ref = "ktor" }
+test-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+test-testcontainers = { group = "org.testcontainers", name = "testcontainers", version.ref = "testcontainers" }
+test-testcontainers-postgres = { group = "org.testcontainers", name = "postgresql", version.ref = "testcontainers" }
+
+[bundles]
+
+database = ["database-exposed-core", "database-exposed-dao", "database-exposed-java-time", "database-exposed-jdbc", "database-hikari",
+  "database-liquibase-core", "database-postgresql"]
+dependency-injection = ["di-koin-ktor", "di-koin-logger-slf4j", "di-koin-annotations"]
+documentation = ["ktor-server-swagger"]
+ktor = ["ktor-server-core", "ktor-server-netty", "ktor-server-content-negotiation", "ktor-server-config-yaml"]
+logging = ["ktor-server-call-logging", "logging-slf4j-simple", "logging-oshai-kotlin-logging"]
+monitoring = ["ktor-server-metrics-micrometer", "monitoring-micrometer-registry-prometheus", "monitoring-cohort-hikari", "monitoring-cohort-ktor",
+  "monitoring-cohort-micrometer"]
+serialization = ["kotlinx-datetime", "kotlinx-serialization-json", "ktor-serialization-kotlinx-json", "serialization-yaml-snakeyaml"]
